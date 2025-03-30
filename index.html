@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption & Decryption</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Encryption & Decryption</h2>
+        <input type="text" id="userText" placeholder="Enter text">
+        <input type="number" id="userShift" placeholder="Enter shift value">
+        <button onclick="handleEncrypt()">Encrypt</button>
+        <button onclick="handleDecrypt()">Decrypt</button>
+        <p id="output"></p>
+    </div>
+    
+    <div class="tabs">
+        <div class="tab" onclick="showTab('videos')">Videos</div>
+        <div class="tab" onclick="showTab('discussion')">Discussion Board</div>
+    </div>
+    
+    <div id="videos" class="tab-content">
+        <h3>Videos on Encryption and Decryption</h3>
+        <p>Here are some useful videos explaining encryption and decryption in cybersecurity:</p>
+        <ul>
+            <li><a href="https://www.youtube.com/watch?v=9u6sovgxiH4" target="_blank">Encryption and Decryption| What is Encryption and Decryption| Concept Explained| S2CS</a></li>
+        </ul>
+        <iframe width="500" height="315" src="https://www.youtube.com/embed/9u6sovgxiH4" 
+            title="Encryption Basics" frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+    
+    
+    <div id="discussion" class="tab-content">
+        <h3>Discussion Board</h3>
+        <ul>
+            <li><strong>Why is encryption important?</strong><br>Encryption is a crucial technology in modern cybersecurity, protecting sensitive information from unauthorized access. It ensures data confidentiality, integrity, and authenticity across various digital communications and storage systems.<br><br><strong>Value of Encryption</strong><br>
+                <br> Confidentiality: Encryption keeps data private by converting it into an unreadable format that only authorized users can decrypt. This is essential for protecting personal, financial, and business information.
+                
+               <br><br> Data Integrity: Encryption ensures that data has not been altered during transmission or storage. If encrypted data is tampered with, it becomes unreadable upon decryption.
+                
+              <br><br> Authentication: Encryption techniques, such as digital signatures and certificates, verify the identity of senders and prevent impersonation in online transactions.
+                
+                <br><br> Compliance & Legal Requirements: Many organizations and industries are required by law to encrypt sensitive data. Regulations like GDPR, HIPAA, and PCI-DSS mandate encryption to protect user data and prevent cyber breaches.</li>
+           <br> <li><strong>Can encryption be misused?</strong><br>While encryption is essential for protecting data and privacy, it can also be misused in various ways. Cybercriminals, malicious insiders, and even authoritarian governments can exploit encryption for illegal or unethical purposes. Below are some scenarios where encryption can be misused:
+            <br><br>1. Cybercriminal Activities<br><br>2. Government & Political Misuse<br><br>3. Business & Corporate Misuse
+        </li>
+        <br> <li><strong>Ethical concerns about encryption.</strong><br>Encryption plays a critical role in securing data, ensuring privacy, and protecting digital communications. However, it also raises ethical concerns, particularly when it is used for criminal activities, national security risks, or government surveillance. Below are key ethical concerns regarding encryption, with real-world examples and cited sources.
+        <br>
+        </li>
+        </ul>
+    </div>
+    
+    <script>
+        function encrypt(text, shift) {
+            let result = "";
+            for (let i = 0; i < text.length; i++) {
+                let char = text[i];
+                if (char.match(/[a-z]/i)) {
+                    let code = text.charCodeAt(i);
+                    let shiftAmount = shift % 26;
+                    if (code >= 65 && code <= 90) {
+                        char = String.fromCharCode(((code - 65 + shiftAmount) % 26) + 65);
+                    } else if (code >= 97 && code <= 122) {
+                        char = String.fromCharCode(((code - 97 + shiftAmount) % 26) + 97);
+                    }
+                }
+                result += char;
+            }
+            return result;
+        }
+
+        function decrypt(text, shift) {
+            return encrypt(text, -shift);
+        }
+
+        function handleEncrypt() {
+            let text = document.getElementById("userText").value;
+            let shift = parseInt(document.getElementById("userShift").value, 10);
+            if (isNaN(shift)) {
+                document.getElementById("output").innerText = "Invalid shift value! Please enter a number.";
+                return;
+            }
+            document.getElementById("output").innerText = "Encrypted Text: " + encrypt(text, shift);
+        }
+
+        function handleDecrypt() {
+            let text = document.getElementById("userText").value;
+            let shift = parseInt(document.getElementById("userShift").value, 10);
+            if (isNaN(shift)) {
+                document.getElementById("output").innerText = "Invalid shift value! Please enter a number.";
+                return;
+            }
+            document.getElementById("output").innerText = "Decrypted Text: " + decrypt(text, shift);
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+            document.getElementById(tabId).classList.add("active");
+        }
+    </script>
+</body>
+</html>
